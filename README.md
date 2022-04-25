@@ -18,16 +18,16 @@ npm install vue-detour
 
   <!-- Tooltip -->
   <basic-tooltip id="tooltip">
-    <button v-if="!isFirstStep" @click="previousStep">
+    <button v-if="!detour.isFirstStep" @click="detour.previousStep">
       Previous
     </button>
 
-    <button v-if="!isLastStep" @click="nextStep">
+    <button v-if="!detour.isLastStep" @click="detour.nextStep">
       Next
     </button>
 
-    <button @click="skip">
-      {{ isLastStep ? "Finish" : "Skip" }}
+    <button @click="detour.skip">
+      {{ detour.isLastStep ? "Finish" : "Skip" }}
     </button>
   </basic-tooltip>
 </template>
@@ -35,13 +35,7 @@ npm install vue-detour
 <script setup lang="ts">
 import { useDetour } from "vue-detour";
 
-const { 
-  isFirstStep, 
-  isLastStep, 
-  nextStep, 
-  previousStep, 
-  skip 
-} = useDetour({
+const detour = useDetour({
   tooltip: "step-1",
   steps: [
     {
@@ -56,6 +50,6 @@ const {
     startOnMount: true,
     returnToTopOnFinish: true,
   },
-})
+});
 </script>
 ```
