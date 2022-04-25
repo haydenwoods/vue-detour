@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useGuide } from "@/lib/composables/guide";
+import { useDetour } from "@/lib/composables/detour";
 
 import BasicTooltip from "@/lib/components/BasicTooltip.vue";
 
@@ -71,7 +71,7 @@ const {
   nextStep,
   previousStep,
   skip,
-} = useGuide({
+} = useDetour({
   tooltip: "#tooltip",
   steps: [
     {

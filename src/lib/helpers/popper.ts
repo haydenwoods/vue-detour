@@ -4,7 +4,7 @@ import {
   createPopper as _createPopper,
 } from "@popperjs/core";
 
-import { GuideOptions } from "@/lib/types/guide";
+import { DetourOptions } from "@/lib/types/detour";
 import { Step, Offset } from "@/lib/types/step";
 
 const DEFAULT_PLACEMENT: Placement = "auto";
@@ -15,7 +15,7 @@ export const getPlacement = ({
   options,
 }: {
   step: Step;
-  options?: GuideOptions;
+  options?: DetourOptions;
 }) => {
   return step.placement ?? options?.defaultPlacement ?? DEFAULT_PLACEMENT;
 };
@@ -25,7 +25,7 @@ export const getModifiers = ({
   options,
 }: {
   step: Step;
-  options?: GuideOptions;
+  options?: DetourOptions;
 }) => {
   return [
     {
@@ -87,7 +87,7 @@ export const createPopper = ({
 }: {
   step: Step;
   tooltip: string;
-  options?: GuideOptions;
+  options?: DetourOptions;
 }) => {
   const tooltipElement = getTooltipElement({ tooltip });
 
@@ -110,7 +110,7 @@ export const updatePopper = ({
 }: {
   step: Step;
   popper: Instance;
-  options?: GuideOptions;
+  options?: DetourOptions;
 }) => {
   const targetElement = getTargetElement({ step });
 

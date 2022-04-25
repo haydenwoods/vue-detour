@@ -1,5 +1,5 @@
-import { useGuide } from "./composables/guide";
+import { useDetour } from "./composables/detour";
 
 import BasicTooltip from "./components/BasicTooltip.vue";
 
-export { useGuide, BasicTooltip };
+export { useDetour, BasicTooltip };

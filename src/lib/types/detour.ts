@@ -1,25 +1,25 @@
 import { Placement } from "@popperjs/core";
 
 import { Step, Offset } from "@/lib/types/step";
-import { useGuide } from "../composables/guide";
+import { useDetour } from "../composables/detour";
 
-export enum GuideStatus {
+export enum DetourStatus {
   PENDING = "pending",
   IN_PROGRESS = "inProgress",
   FINISHED = "finished",
 }
 
-export type Guide = ReturnType<typeof useGuide>;
+export type Detour = ReturnType<typeof useDetour>;
 
-export type GuideOptions = {
+export type DetourOptions = {
   defaultPlacement?: Placement;
   defaultOffset?: Offset;
   startOnMount?: boolean;
   returnToTopOnFinish?: boolean;
 };
 
-export type GuideParams = {
+export type DetourParams = {
   steps: Step[];
   tooltip: string;
-  options?: GuideOptions;
+  options?: DetourOptions;
 };

@@ -10,12 +10,12 @@ import {
 } from "@/lib/helpers/popper";
 import { scrollToTarget, scrollToTop } from "@/lib/helpers/step";
 
-import { GuideParams, GuideStatus } from "@/lib/types/guide";
+import { DetourParams, DetourStatus } from "@/lib/types/detour";
 import { Step } from "@/lib/types/step";
 
-export const useGuide = ({ steps, tooltip, options }: GuideParams) => {
+export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
   const popper = ref<Instance>();
-  const status = ref<GuideStatus>(GuideStatus.PENDING);
+  const status = ref<DetourStatus>(DetourStatus.PENDING);
   const currentStepIndex = ref<number>(0);
   const currentStep = ref<Step>();
 
@@ -66,7 +66,7 @@ export const useGuide = ({ steps, tooltip, options }: GuideParams) => {
 
   const start = () => {
     goToStep({ index: 0 });
-    status.value = GuideStatus.IN_PROGRESS;
+    status.value = DetourStatus.IN_PROGRESS;
   };
 
   const finish = async () => {
@@ -84,7 +84,7 @@ export const useGuide = ({ steps, tooltip, options }: GuideParams) => {
     currentStep.value = undefined;
     currentStepIndex.value = 0;
 
-    status.value = GuideStatus.FINISHED;
+    status.value = DetourStatus.FINISHED;
   };
 
   const nextStep = () => {
