@@ -15,6 +15,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "publish": "npm run build && npm publish",
+    "publish:alpha": "npm run build && npm publish --tag alpha",
+    "publish:beta": "npm run build && npm publish --tag beta",
     "preview": "vite preview"
   },
   "dependencies": {
