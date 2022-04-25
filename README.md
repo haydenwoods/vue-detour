@@ -14,6 +14,7 @@ npm install vue-detour
 
 ```html
 <template>
+  <!-- Steps -->
   <div id="step-1"></div>
 
   <!-- Tooltip -->
@@ -46,9 +47,9 @@ const detour = useDetour({
   ],
   options: {
     defaultPlacement: "auto",
-    defaultOffset: [0, 8],
-    startOnMount: true,
-    returnToTopOnFinish: true,
+    defaultOffset: [0, 8], 
+    startOnMount: true, // Start detour on page mount
+    returnToTopOnFinish: true, // Scroll to the top of the page on detour finish
   },
 });
 </script>
