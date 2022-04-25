@@ -15,25 +15,39 @@ npm install vue-detour
 ```html
 <template>
   <div id="step-1"></div>
-  <div id="step-2"></div>
 
   <!-- Tooltip -->
-  <div id="tooltip"></div>
+  <basic-tooltip id="tooltip">
+    <button v-if="!isFirstStep" @click="previousStep">
+      Previous
+    </button>
+
+    <button v-if="!isLastStep" @click="nextStep">
+      Next
+    </button>
+
+    <button @click="skip">
+      {{ isLastStep ? "Finish" : "Skip" }}
+    </button>
+  </basic-tooltip>
 </template>
 
-<script>
+<script setup lang="ts">
 import { useDetour } from "vue-detour";
 
-const detour = useDetour({
+const { 
+  isFirstStep, 
+  isLastStep, 
+  nextStep, 
+  previousStep, 
+  skip 
+} = useDetour({
   tooltip: "step-1",
   steps: [
     {
       target: "#step-1",
-    },
-    {
-      target: "#step-2",
       placement: "top-end", // Optional placement
-      offset: [0, 24], // Optional offset for
+      offset: [0, 24], // Optional offset
     },
   ],
   options: {
