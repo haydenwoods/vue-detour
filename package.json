@@ -1,8 +1,9 @@
 {
   "name": "vue-detour",
-  "version": "0.0.1",
-
-  "files": ["dist"],
+  "version": "0.0.2",
+  "files": [
+    "dist"
+  ],
   "main": "./dist/vue-detour.umd.js",
   "module": "./dist/vue-detour.es.js",
   "exports": {
@@ -11,7 +12,6 @@
       "require": "./dist/vue-detour.umd.js"
     }
   },
-
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
