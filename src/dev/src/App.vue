@@ -1,29 +1,40 @@
 <template>
-  <div class="flex gap-x-4">
-    <button @click="start">Start</button>
-    <button @click="finish">Finish</button>
-  </div>
+  <header class="h-20 bg-gray-200 w-full">
+    <div class="h-full max-w-4xl w-full px-4 mx-auto flex items-center">
+      <h1 id="step-1" class="text-xl">vue-detour</h1>
+    </div>
+  </header>
 
-  <div
-    id="step-1"
-    class="bg-black h-4 w-4 absolute top-[400px] left-[300px] m-8"
-  ></div>
-  <div
-    id="step-2"
-    class="bg-black h-4 w-4 absolute top-[1600px] left-[900px] m-8"
-  ></div>
-  <div
-    id="step-3"
-    class="bg-black h-4 w-4 absolute top-[600px] left-[200px] m-8"
-  ></div>
-  <div
-    id="step-4"
-    class="bg-black h-4 w-4 absolute top-[200px] left-[400px] m-8"
-  ></div>
-  <div
-    id="step-5"
-    class="bg-black h-4 w-4 absolute top-[100px] left-[900px] m-8"
-  ></div>
+  <main class="max-w-4xl w-full mx-auto px-4 pt-10">
+    <div class="flex gap-x-8">
+      <div
+        id="step-2"
+        class="bg-purple-200 text-purple-800 w-1/3 rounded-2xl p-8"
+      >
+        <h2 class="text-2xl font-semibold">Item one</h2>
+        <p class="pt-3 text-lg">
+          This is an example item that the user would be directed to when they
+          first <span id="step-3" class="font-bold">view</span> the page.
+        </p>
+      </div>
+
+      <div class="bg-green-200 text-green-800 w-1/3 rounded-2xl p-8">
+        <h2 class="text-xl font-semibold">Item two</h2>
+        <p class="pt-3 text-lg">
+          This is another example item that the user would be directed to when
+          they first view the page. Maybe this one is longer than the others?
+        </p>
+      </div>
+
+      <div class="bg-blue-200 text-blue-800 w-1/3 rounded-2xl p-8">
+        <h2 class="text-xl font-semibold">Item three</h2>
+        <p class="pt-3 text-lg">
+          This is another example item that the user would be directed to when
+          they first view the page.
+        </p>
+      </div>
+    </div>
+  </main>
 
   <basic-tooltip id="tooltip" class="bg-blue-600 rounded-lg text-white">
     <div class="flex flex-col">
@@ -76,40 +87,27 @@ const {
   steps: [
     {
       target: "#step-1",
-      placement: "bottom-start",
       props: {
-        content: "Step 1",
+        content: "This is the header",
       },
     },
     {
       target: "#step-2",
-      placement: "top-end",
       props: {
-        content: "Step 2",
+        content: "This is a highlighted content box",
       },
     },
     {
       target: "#step-3",
+      placement: "bottom",
       props: {
-        content:
-          "Step 3 asda sdas das dasd asdas das dasd asd asd asd asda sda sd as",
-      },
-    },
-    {
-      target: "#step-4",
-      props: {
-        content: "Step 4",
-      },
-    },
-    {
-      target: "#step-5",
-      props: {
-        content: "Step 5",
+        content: "You could even highlight a specific word",
       },
     },
   ],
   options: {
     returnToTopOnFinish: true,
+    startOnMount: true,
   },
 });
 </script>
