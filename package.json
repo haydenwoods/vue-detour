@@ -1,18 +1,44 @@
 {
   "name": "vue-detour",
+  "description": "Introduce users to your app by taking them on a detour.",
   "version": "0.0.7",
   "license": "MIT",
+  "author": {
+    "name": "Hayden Woods",
+    "email": "haydenwoodsdeveloper@gmail.com",
+    "url": "https://hayden.sh"
+  },
+  "homepage": "https://github.com/haydenwoods/vue-detour",
+  "bugs": "https://github.com/haydenwoods/vue-detour/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haydenwoods/vue-detour.git"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "javascript",
+    "js",
+    "typescript",
+    "ts"
+  ],
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8"
+  },
+
+  "main": "./dist/vue-detour.umd.js",
+  "module": "./dist/vue-detour.es.js",
   "files": [
     "dist"
   ],
-  "main": "./dist/vue-detour.umd.js",
-  "module": "./dist/vue-detour.es.js",
   "exports": {
     ".": {
       "import": "./dist/vue-detour.es.js",
       "require": "./dist/vue-detour.umd.js"
     }
   },
+  
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
