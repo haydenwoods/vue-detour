@@ -1,6 +1,6 @@
 {
   "name": "vue-detour",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "licence": "MIT",
   "files": [
     "dist"
