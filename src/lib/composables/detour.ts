@@ -7,11 +7,11 @@ import {
   createPopper,
   hideTooltipElement,
   showTooltipElement,
-} from "@/lib/helpers/popper";
-import { scrollToTarget, scrollToTop } from "@/lib/helpers/step";
+} from "../helpers/popper";
+import { scrollToTarget, scrollToTop } from "../helpers/step";
 
-import { DetourParams, DetourStatus } from "@/lib/types/detour";
-import { Step } from "@/lib/types/step";
+import { DetourParams, DetourStatus } from "../types/detour";
+import { Step } from "../types/step";
 
 export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
   const popper = ref<Instance>();
@@ -108,7 +108,6 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
   });
 
   return {
-    popper: readonly(popper),
     status: readonly(status),
     currentStepIndex: readonly(currentStepIndex),
     currentStep: readonly(currentStep),

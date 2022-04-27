@@ -73,7 +73,6 @@ import { useDetour } from "@/lib/composables/detour";
 import BasicTooltip from "@/lib/components/BasicTooltip.vue";
 
 const {
-  popper,
   isFirstStep,
   isLastStep,
   currentStep,

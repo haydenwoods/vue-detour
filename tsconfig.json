@@ -14,6 +14,7 @@
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
+    "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -21,6 +22,10 @@
       ],
     },
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.d.ts",
+    "src/**/*.vue"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

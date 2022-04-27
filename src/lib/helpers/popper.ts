@@ -4,8 +4,8 @@ import {
   createPopper as _createPopper,
 } from "@popperjs/core";
 
-import { DetourOptions } from "@/lib/types/detour";
-import { Step, Offset } from "@/lib/types/step";
+import { DetourOptions } from "../types/detour";
+import { Step, Offset } from "../types/step";
 
 const DEFAULT_PLACEMENT: Placement = "auto";
 const DEFAULT_OFFSET: Offset = [0, 10];

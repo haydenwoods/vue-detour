@@ -1,7 +1,7 @@
-import { getTargetElement } from "@/lib/helpers/popper";
-import { sleep } from "@/lib/helpers/general";
+import { getTargetElement } from "../helpers/popper";
+import { sleep } from "../helpers/general";
 
-import { Step } from "@/lib/types/step";
+import { Step } from "../types/step";
 
 export const scrollToTop = async () => {
   document.body.scrollIntoView({

@@ -1,6 +1,6 @@
 import { Placement } from "@popperjs/core";
 
-import { Step, Offset } from "@/lib/types/step";
+import { Step, Offset } from "./step";
 import { useDetour } from "../composables/detour";
 
 export enum DetourStatus {
