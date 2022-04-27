@@ -28,6 +28,7 @@
   },
   "main": "./dist/vue-detour.umd.js",
   "module": "./dist/vue-detour.es.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -38,15 +39,15 @@
     }
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "dev": "vite --config ./vite.dev.config.ts",
+    "build": "vue-tsc --noEmit && vite build --config ./vite.lib.config.ts",
     "publish": "npm publish",
     "publish:alpha": "npm publish --tag alpha",
-    "publish:beta": "npm publish --tag beta",
-    "preview": "vite preview"
+    "publish:beta": "npm publish --tag beta"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",
+    "vite-plugin-dts": "^1.1.1",
     "vue": "^3.2.25"
   },
   "devDependencies": {

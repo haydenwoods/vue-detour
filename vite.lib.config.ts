@@ -1,24 +1,26 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import dts from "vite-plugin-dts";
 import path from "path";
 
 export default defineConfig({
-  root: "src/dev",
-  server: {
-    port: 3000,
-  },
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    dts({
+      rollupTypes: true,
+      copyDtsFiles: false,
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
     },
   },
-
   build: {
-    outDir: "../../dist",
+    emptyOutDir: true,
     lib: {
-      entry: path.resolve(__dirname, "./src/lib/index.ts"),
       name: "vue-detour",
+      entry: path.resolve(__dirname, "./src/lib/index.ts"),
       fileName: (format) => `vue-detour.${format}.js`,
     },
     rollupOptions: {
