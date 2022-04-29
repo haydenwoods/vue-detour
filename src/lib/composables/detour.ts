@@ -10,8 +10,9 @@ import {
 } from "../helpers/popper";
 import { scrollToTarget, scrollToTop } from "../helpers/step";
 
-import { DetourParams, DetourStatus } from "../types/detour";
+import { DetourParams, DetourPersistence, DetourStatus } from "../types/detour";
 import { Step } from "../types/step";
+import { persistenceRead, persistenceWrite } from "../helpers/persistence";
 
 export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
   const popper = ref<Instance>();
@@ -26,6 +27,24 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
   const isLastStep = computed(() => {
     return currentStepIndex.value === steps.length - 1;
   });
+
+  const persist = () => {
+    if (options?.persistence) {
+      persistenceWrite({
+        status: status.value,
+        stepIndex: currentStepIndex.value,
+        options: options.persistence,
+      });
+    }
+  };
+
+  const restore = ({ persistence }: { persistence: DetourPersistence }) => {
+    status.value = persistence.status;
+
+    if (status.value === DetourStatus.IN_PROGRESS) {
+      goToStep({ index: persistence.stepIndex ?? 0 });
+    }
+  };
 
   const goToStep = async ({ index }: { index: number }) => {
     if (index >= steps.length || index < 0) {
@@ -62,15 +81,33 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
     }
 
     showTooltipElement({ tooltip });
+    persist();
   };
 
   const start = () => {
     goToStep({ index: 0 });
     status.value = DetourStatus.IN_PROGRESS;
+    persist();
+  };
+
+  const hide = async () => {
+    if (!popper.value || status.value !== DetourStatus.IN_PROGRESS) return;
+
+    hideTooltipElement({ tooltip });
+
+    if (options?.returnToTopOnFinish) {
+      await scrollToTop();
+    }
+
+    destroyPopper({ popper: popper.value });
+
+    popper.value = undefined;
+
+    persist();
   };
 
   const finish = async () => {
-    if (!popper.value) return;
+    if (!popper.value || status.value !== DetourStatus.IN_PROGRESS) return;
 
     hideTooltipElement({ tooltip });
 
@@ -85,6 +122,8 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
     currentStepIndex.value = 0;
 
     status.value = DetourStatus.FINISHED;
+
+    persist();
   };
 
   const nextStep = () => {
@@ -102,8 +141,18 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
   onMounted(() => {
     hideTooltipElement({ tooltip });
 
-    if (options?.startOnMount) {
-      start();
+    if (options?.persistence) {
+      const persistence = persistenceRead({ options: options.persistence });
+
+      if (persistence) {
+        restore({ persistence });
+      } else {
+        persist();
+
+        if (options?.startOnMount) {
+          start();
+        }
+      }
     }
   });
 
@@ -114,6 +163,7 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
     isFirstStep,
     isLastStep,
     start,
+    hide,
     finish,
     nextStep,
     previousStep,

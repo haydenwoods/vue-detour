@@ -1,7 +1,30 @@
 <template>
   <header class="h-20 bg-gray-200 w-full">
     <div class="h-full max-w-4xl w-full px-4 mx-auto flex items-center">
-      <h1 id="step-1" class="text-xl">vue-detour</h1>
+      <h1 id="step-1" class="text-xl">Vue Detour</h1>
+
+      <div class="ml-auto flex gap-x-4">
+        <button
+          class="bg-green-300 hover:bg-green-400 transition-colors text-green-900 rounded-lg px-2.5 py-1.5"
+          @click="start"
+        >
+          Start Detour
+        </button>
+
+        <button
+          class="bg-yellow-300 hover:bg-yellow-400 transition-colors text-yellow-900 rounded-lg px-2.5 py-1.5"
+          @click="hide"
+        >
+          Hide Detour
+        </button>
+
+        <button
+          class="bg-red-300 hover:bg-red-400 transition-colors text-red-900 rounded-lg px-2.5 py-1.5"
+          @click="finish"
+        >
+          End Detour
+        </button>
+      </div>
     </div>
   </header>
 
@@ -77,6 +100,7 @@ const {
   isLastStep,
   currentStep,
   start,
+  hide,
   finish,
   nextStep,
   previousStep,
@@ -107,6 +131,11 @@ const {
   options: {
     returnToTopOnFinish: true,
     startOnMount: true,
+    persistence: {
+      type: "local",
+      key: "home",
+      version: "0.0.1",
+    },
   },
 });
 </script>
