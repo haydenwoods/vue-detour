@@ -95,7 +95,7 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
 
     hideTooltipElement({ tooltip });
 
-    if (options?.returnToTopOnFinish) {
+    if (options?.scrollToTopOnFinish) {
       await scrollToTop();
     }
 
@@ -111,7 +111,7 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
 
     hideTooltipElement({ tooltip });
 
-    if (options?.returnToTopOnFinish) {
+    if (options?.scrollToTopOnFinish) {
       await scrollToTop();
     }
 
@@ -149,7 +149,7 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
       } else {
         persist();
 
-        if (options?.startOnMount) {
+        if (options?.startImmediately) {
           start();
         }
       }

@@ -59,7 +59,14 @@
     </div>
   </main>
 
-  <basic-tooltip id="tooltip" class="bg-blue-600 rounded-lg text-white">
+  <div
+    id="tooltip"
+    class="p-3 flex flex-col shadow-md max-w-xs transition-opacity bg-blue-600 rounded-lg text-white"
+  >
+    <slot name="arrow">
+      <div data-popper-arrow></div>
+    </slot>
+
     <div class="flex flex-col">
       <p>
         {{ currentStep?.props.content }}
@@ -87,13 +94,11 @@
         </button>
       </div>
     </div>
-  </basic-tooltip>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { useDetour } from "@/lib/composables/detour";
-
-import BasicTooltip from "@/lib/components/BasicTooltip.vue";
 
 const {
   isFirstStep,
@@ -129,8 +134,8 @@ const {
     },
   ],
   options: {
-    returnToTopOnFinish: true,
-    startOnMount: true,
+    scrollToTopOnFinish: true,
+    startImmediately: true,
     persistence: {
       type: "local",
       key: "home",
@@ -139,3 +144,39 @@ const {
   },
 });
 </script>
+
+<style scoped>
+#tooltip div[data-popper-arrow],
+#tooltip div[data-popper-arrow]::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+#tooltip div[data-popper-arrow] {
+  visibility: hidden;
+}
+
+#tooltip div[data-popper-arrow]::before {
+  visibility: visible;
+  content: "";
+  transform: rotate(45deg);
+}
+
+#tooltip[data-popper-placement^="top"] > div[data-popper-arrow] {
+  bottom: -4px;
+}
+
+#tooltip[data-popper-placement^="bottom"] > div[data-popper-arrow] {
+  top: -4px;
+}
+
+#tooltip[data-popper-placement^="left"] > div[data-popper-arrow] {
+  right: -4px;
+}
+
+#tooltip[data-popper-placement^="right"] > div[data-popper-arrow] {
+  left: -4px;
+}
+</style>

@@ -28,8 +28,8 @@ export type DetourPersistence = {
 export type DetourOptions = {
   defaultPlacement?: Placement;
   defaultOffset?: Offset;
-  startOnMount?: boolean;
-  returnToTopOnFinish?: boolean;
+  startImmediately?: boolean;
+  scrollToTopOnFinish?: boolean;
   persistence?: DetourPersistenceOption;
 };
 
