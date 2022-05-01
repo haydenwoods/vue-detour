@@ -20,6 +20,14 @@ npm install vue-detour
 
   <!-- Tooltip -->
   <div id="tooltip">
+    <h1>
+      {{ detour?.currentStep?.props?.title }}
+    </h1>
+
+    <p>
+      {{ detour?.currentStep?.props?.body }}
+    </p>
+
     <button v-if="!detour.isFirstStep" @click="detour.previousStep">
       Previous
     </button>
@@ -38,15 +46,19 @@ npm install vue-detour
 import { useDetour } from "vue-detour";
 
 const detour = useDetour({
-  tooltip: "step-1", // CSS query selector string
+  tooltip: "step-1", // CSS query selector string for the tooltip
   steps: [
     {
-      target: "#step-1", // CSS query selector string
+      target: "#step-1", // CSS query selector string for the step
       placement: "top-end", // Optional placement
       offset: [0, 24], // Optional offset
+      props: { 
+        title: "Title",
+        body: "Body",
+      },
     },
     {
-      target: "#step-2", // CSS query selector string
+      target: "#step-2", // CSS query selector string for the step
     },
   ],
   options: {
@@ -54,6 +66,11 @@ const detour = useDetour({
     defaultOffset: [0, 8], // Default offset, overriden by individual step offset
     startImmediately: true, // Start detour immediately
     scrollToTopOnFinish: true, // Scroll to the top of the page on detour finish
+    persistence: { // Persist state of detour to storage, boolean or persistence options
+      type: "local", // LocalStorage or SessionStorage
+      key: "home", // Storage key
+      version: "0.0.1", // Incrementable version
+    },
   },
 });
 </script>
