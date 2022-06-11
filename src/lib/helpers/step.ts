@@ -1,5 +1,4 @@
 import { getTargetElement } from "../helpers/popper";
-import { sleep } from "../helpers/general";
 
 import { Step } from "../types/step";
 
@@ -7,19 +6,19 @@ export const scrollToTop = async () => {
   document.body.scrollIntoView({
     behavior: "smooth",
   });
-
-  await sleep(500);
 };
 
-export const scrollToTarget = async ({ step }: { step: Step }) => {
+export const scrollToTarget = ({ step }: { step: Step }) => {
   const targetElement = getTargetElement({ step });
 
-  if (!targetElement) return;
+  if (!targetElement) {
+    throw new Error(
+      "Unable to find element to scroll to. Are you sure there is an element with the "
+    );
+  }
 
   targetElement.scrollIntoView({
     behavior: "smooth",
     block: "center",
   });
-
-  await sleep(500);
 };

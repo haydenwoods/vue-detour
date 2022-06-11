@@ -1,14 +1,9 @@
-import {
-  Instance,
-  Placement,
-  createPopper as _createPopper,
-} from "@popperjs/core";
+import { Instance, createPopper as _createPopper } from "@popperjs/core";
+
+import { DEFAULT_PLACEMENT, DEFAULT_OFFSET } from "../constants/popper";
 
 import { DetourOptions } from "../types/detour";
-import { Step, Offset } from "../types/step";
-
-const DEFAULT_PLACEMENT: Placement = "auto";
-const DEFAULT_OFFSET: Offset = [0, 10];
+import { Step } from "../types/step";
 
 export const getPlacement = ({
   step,
@@ -51,33 +46,23 @@ export const getModifiers = ({
 };
 
 export const getTargetElement = ({ step }: { step: Step }) => {
-  return document.querySelector(step.target);
+  const element = document.querySelector(step.target);
+
+  if (!element || !(element instanceof HTMLElement)) {
+    throw new Error("Unable to find target element");
+  }
+
+  return element;
 };
 
 export const getTooltipElement = ({ tooltip }: { tooltip: string }) => {
   const element = document.querySelector(tooltip);
 
-  if (!element || !(element instanceof HTMLElement)) return;
+  if (!element || !(element instanceof HTMLElement)) {
+    throw new Error("Unable to find tooltip element");
+  }
 
   return element;
-};
-
-export const showTooltipElement = ({ tooltip }: { tooltip: string }) => {
-  const tooltipElement = getTooltipElement({ tooltip });
-
-  if (!tooltipElement) return;
-
-  tooltipElement.style.opacity = "1";
-  tooltipElement.style.pointerEvents = "all";
-};
-
-export const hideTooltipElement = ({ tooltip }: { tooltip: string }) => {
-  const tooltipElement = getTooltipElement({ tooltip });
-
-  if (!tooltipElement) return;
-
-  tooltipElement.style.opacity = "0";
-  tooltipElement.style.pointerEvents = "none";
 };
 
 export const createPopper = ({
@@ -89,18 +74,17 @@ export const createPopper = ({
   tooltip: string;
   options?: DetourOptions;
 }) => {
-  const tooltipElement = getTooltipElement({ tooltip });
+  try {
+    const tooltipElement = getTooltipElement({ tooltip });
+    const targetElement = getTargetElement({ step });
 
-  if (!tooltipElement) return;
-
-  const targetElement = getTargetElement({ step });
-
-  if (!targetElement) return;
-
-  return _createPopper(targetElement, tooltipElement, {
-    placement: getPlacement({ step, options }),
-    modifiers: getModifiers({ step, options }),
-  });
+    return _createPopper(targetElement, tooltipElement, {
+      placement: getPlacement({ step, options }),
+      modifiers: getModifiers({ step, options }),
+    });
+  } catch (error) {
+    console.error("createPopper: ", error);
+  }
 };
 
 export const updatePopper = ({
@@ -112,18 +96,20 @@ export const updatePopper = ({
   popper: Instance;
   options?: DetourOptions;
 }) => {
-  const targetElement = getTargetElement({ step });
+  try {
+    const targetElement = getTargetElement({ step });
 
-  if (!targetElement) return;
+    popper.state.elements.reference = targetElement;
 
-  popper.state.elements.reference = targetElement;
+    popper.setOptions({
+      placement: getPlacement({ step, options }),
+      modifiers: getModifiers({ step, options }),
+    });
 
-  popper.setOptions({
-    placement: getPlacement({ step, options }),
-    modifiers: getModifiers({ step, options }),
-  });
-
-  popper.update();
+    popper.update();
+  } catch (error) {
+    console.error("updatePopper: ", error);
+  }
 };
 
 export const destroyPopper = ({ popper }: { popper: Instance }) => {

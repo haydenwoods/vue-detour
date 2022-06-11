@@ -1,13 +1,7 @@
-import { computed, onMounted, readonly, ref } from "vue";
+import { computed, nextTick, onMounted, readonly, ref } from "vue";
 import { Instance } from "@popperjs/core";
 
-import {
-  destroyPopper,
-  updatePopper,
-  createPopper,
-  hideTooltipElement,
-  showTooltipElement,
-} from "../helpers/popper";
+import { destroyPopper, updatePopper, createPopper } from "../helpers/popper";
 import { scrollToTarget, scrollToTop } from "../helpers/step";
 
 import { DetourParams, DetourPersistence, DetourStatus } from "../types/detour";
@@ -19,6 +13,7 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
   const status = ref<DetourStatus>(DetourStatus.PENDING);
   const currentStepIndex = ref<number>(0);
   const currentStep = ref<Step>();
+  const hidden = ref<boolean>(false);
 
   const isFirstStep = computed(() => {
     return currentStepIndex.value === 0;
@@ -26,6 +21,10 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
 
   const isLastStep = computed(() => {
     return currentStepIndex.value === steps.length - 1;
+  });
+
+  const isHidden = computed(() => {
+    return hidden.value || status.value !== DetourStatus.IN_PROGRESS;
   });
 
   const persist = () => {
@@ -58,9 +57,8 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
     }
 
     // Before update currentStep
-    hideTooltipElement({ tooltip });
     await nextStep.before?.();
-    await scrollToTarget({ step: nextStep });
+    scrollToTarget({ step: nextStep });
 
     currentStepIndex.value = index;
     currentStep.value = nextStep;
@@ -80,20 +78,30 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
       });
     }
 
-    showTooltipElement({ tooltip });
     persist();
   };
 
   const start = () => {
-    goToStep({ index: 0 });
     status.value = DetourStatus.IN_PROGRESS;
+    hidden.value = false;
+
+    nextTick(() => {
+      goToStep({ index: 0 });
+    });
+
     persist();
   };
 
   const hide = async () => {
-    if (!popper.value || status.value !== DetourStatus.IN_PROGRESS) return;
+    if (!popper.value) {
+      return console.warn(
+        "Unable to hide detour as there is no defined popper."
+      );
+    }
 
-    hideTooltipElement({ tooltip });
+    if (status.value !== DetourStatus.IN_PROGRESS) {
+      return console.warn("Unable to hide detour as it is not IN_PROGRESS.");
+    }
 
     if (options?.scrollToTopOnFinish) {
       await scrollToTop();
@@ -102,14 +110,21 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
     destroyPopper({ popper: popper.value });
 
     popper.value = undefined;
+    hidden.value = true;
 
     persist();
   };
 
   const finish = async () => {
-    if (!popper.value || status.value !== DetourStatus.IN_PROGRESS) return;
+    if (!popper.value) {
+      return console.warn(
+        "Unable to finish detour as there is no defined popper."
+      );
+    }
 
-    hideTooltipElement({ tooltip });
+    if (status.value !== DetourStatus.IN_PROGRESS) {
+      return console.warn("Unable to finish detour as it is not IN_PROGRESS.");
+    }
 
     if (options?.scrollToTopOnFinish) {
       await scrollToTop();
@@ -139,8 +154,6 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
   };
 
   onMounted(() => {
-    hideTooltipElement({ tooltip });
-
     if (options?.persistence) {
       const persistence = persistenceRead({ options: options.persistence });
 
@@ -162,6 +175,7 @@ export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
     currentStep: readonly(currentStep),
     isFirstStep,
     isLastStep,
+    isHidden,
     start,
     hide,
     finish,

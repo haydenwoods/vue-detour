@@ -60,16 +60,16 @@
   </main>
 
   <div
+    v-if="!isHidden"
     id="tooltip"
-    class="p-3 flex flex-col shadow-md max-w-xs transition-opacity bg-blue-600 rounded-lg text-white"
+    class="p-3 flex flex-col shadow-md max-w-xs bg-blue-600 rounded-lg text-white transition-transform duration-300"
+    transition-transform
   >
-    <slot name="arrow">
-      <div data-popper-arrow></div>
-    </slot>
+    <div data-popper-arrow></div>
 
     <div class="flex flex-col">
       <p>
-        {{ currentStep?.props.content }}
+        {{ currentStep?.props?.content }}
       </p>
 
       <div class="flex gap-x-3 pt-3 items-center">
@@ -103,6 +103,7 @@ import { useDetour } from "@/lib/composables/detour";
 const {
   isFirstStep,
   isLastStep,
+  isHidden,
   currentStep,
   start,
   hide,

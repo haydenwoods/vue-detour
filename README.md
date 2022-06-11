@@ -19,7 +19,7 @@ npm install vue-detour
   <div id="step-2"></div>
 
   <!-- Tooltip -->
-  <div id="tooltip">
+  <div v-if="!detour.isHidden" id="tooltip">
     <h1>
       {{ detour?.currentStep?.props?.title }}
     </h1>
