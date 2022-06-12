@@ -1,18 +1,30 @@
 import { computed, nextTick, onMounted, readonly, ref } from "vue";
 import { Instance } from "@popperjs/core";
 
+import {
+  DetourOptions,
+  DetourPersistence,
+  DetourStatus,
+} from "../types/detour";
+import { DetourStep } from "../types/step";
+
 import { destroyPopper, updatePopper, createPopper } from "../helpers/popper";
 import { scrollToTarget, scrollToTop } from "../helpers/step";
-
-import { DetourParams, DetourPersistence, DetourStatus } from "../types/detour";
-import { Step } from "../types/step";
 import { persistenceRead, persistenceWrite } from "../helpers/persistence";
 
-export const useDetour = ({ steps, tooltip, options }: DetourParams) => {
+export const useDetour = <StepProps>({
+  steps,
+  tooltip,
+  options,
+}: {
+  steps: DetourStep<StepProps>[];
+  tooltip: string;
+  options?: DetourOptions;
+}) => {
   const popper = ref<Instance>();
   const status = ref<DetourStatus>(DetourStatus.PENDING);
   const currentStepIndex = ref<number>(0);
-  const currentStep = ref<Step>();
+  const currentStep = ref<DetourStep>();
   const hidden = ref<boolean>(false);
 
   const isFirstStep = computed(() => {

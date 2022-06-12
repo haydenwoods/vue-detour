@@ -32,7 +32,7 @@ export const getPersistenceKey = ({
 }: {
   options: DetourPersistenceOptions;
 }) => {
-  return `vue-detour-${options.key}-${options.version}`;
+  return `vue-detour-${options.key}${options.version && `-${options.version}`}`;
 };
 
 export const getPersistenceStorage = ({

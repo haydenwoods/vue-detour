@@ -111,7 +111,9 @@ const {
   nextStep,
   previousStep,
   skip,
-} = useDetour({
+} = useDetour<{
+  content: string;
+}>({
   tooltip: "#tooltip",
   steps: [
     {

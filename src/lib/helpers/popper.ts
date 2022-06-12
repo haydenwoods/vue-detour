@@ -3,13 +3,13 @@ import { Instance, createPopper as _createPopper } from "@popperjs/core";
 import { DEFAULT_PLACEMENT, DEFAULT_OFFSET } from "../constants/popper";
 
 import { DetourOptions } from "../types/detour";
-import { Step } from "../types/step";
+import { DetourStep } from "../types/step";
 
 export const getPlacement = ({
   step,
   options,
 }: {
-  step: Step;
+  step: DetourStep;
   options?: DetourOptions;
 }) => {
   return step.placement ?? options?.defaultPlacement ?? DEFAULT_PLACEMENT;
@@ -19,7 +19,7 @@ export const getModifiers = ({
   step,
   options,
 }: {
-  step: Step;
+  step: DetourStep;
   options?: DetourOptions;
 }) => {
   return [
@@ -45,7 +45,7 @@ export const getModifiers = ({
   ];
 };
 
-export const getTargetElement = ({ step }: { step: Step }) => {
+export const getTargetElement = ({ step }: { step: DetourStep }) => {
   const element = document.querySelector(step.target);
 
   if (!element || !(element instanceof HTMLElement)) {
@@ -70,7 +70,7 @@ export const createPopper = ({
   tooltip,
   options,
 }: {
-  step: Step;
+  step: DetourStep;
   tooltip: string;
   options?: DetourOptions;
 }) => {
@@ -92,7 +92,7 @@ export const updatePopper = ({
   popper,
   options,
 }: {
-  step: Step;
+  step: DetourStep;
   popper: Instance;
   options?: DetourOptions;
 }) => {

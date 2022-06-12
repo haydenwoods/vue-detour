@@ -1,11 +1,11 @@
 import { Placement } from "@popperjs/core";
 
-export type Offset = [number, number];
+import { Offset } from "./popper";
 
-export type Step = {
+export type DetourStep<Props = Record<string, any>> = {
   target: string;
   placement?: Placement;
   offset?: Offset;
-  props?: Record<string, any>;
+  props?: Props;
   before?: () => void | Promise<void>;
 };

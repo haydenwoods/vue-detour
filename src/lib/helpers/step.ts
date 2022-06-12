@@ -1,6 +1,6 @@
 import { getTargetElement } from "../helpers/popper";
 
-import { Step } from "../types/step";
+import { DetourStep } from "../types/step";
 
 export const scrollToTop = async () => {
   document.body.scrollIntoView({
@@ -8,7 +8,7 @@ export const scrollToTop = async () => {
   });
 };
 
-export const scrollToTarget = ({ step }: { step: Step }) => {
+export const scrollToTarget = ({ step }: { step: DetourStep }) => {
   const targetElement = getTargetElement({ step });
 
   if (!targetElement) {

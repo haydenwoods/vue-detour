@@ -1,6 +1,6 @@
 import { Placement } from "@popperjs/core";
 
-import { Step, Offset } from "../types/step";
+import { Offset } from "../types/popper";
 
 import { useDetour } from "../composables/detour";
 
@@ -15,7 +15,7 @@ export enum DetourStatus {
 export type DetourPersistenceOptions = {
   type: "local" | "session";
   key: string;
-  version: string | number;
+  version?: string | number;
 };
 
 export type DetourPersistenceOption = boolean | DetourPersistenceOptions;
@@ -31,10 +31,4 @@ export type DetourOptions = {
   startImmediately?: boolean;
   scrollToTopOnFinish?: boolean;
   persistence?: DetourPersistenceOption;
-};
-
-export type DetourParams = {
-  steps: Step[];
-  tooltip: string;
-  options?: DetourOptions;
 };
